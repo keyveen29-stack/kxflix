@@ -1,0 +1,580 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>KXFLIX</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- =========================================
+       CONNEXION KX
+  ========================================= -->
+
+  <div id="login-screen">
+
+    <div class="login-background"></div>
+
+    <div class="login-box">
+
+      <div class="login-logo">
+        KX<span>FLIX</span>
+      </div>
+
+      <div id="name-step" class="login-step active">
+
+        <h1>Bienvenue</h1>
+
+        <p>
+          Entre ton prénom pour continuer.
+        </p>
+
+        <input
+          id="name-input"
+          type="text"
+          placeholder="Ton prénom"
+          autocomplete="name"
+          maxlength="30"
+        >
+
+        <button id="name-button">
+          Continuer
+        </button>
+
+      </div>
+
+      <div id="password-step" class="login-step">
+
+        <h1>Accès KXFLIX</h1>
+
+        <p>
+          Entre le mot de passe pour accéder à la plateforme.
+        </p>
+
+        <input
+          id="password-input"
+          type="password"
+          placeholder="Mot de passe"
+          autocomplete="off"
+        >
+
+        <!-- MESSAGE TELEGRAM -->
+        <a
+          href="https://t.me/kxback"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="telegram-access-message"
+        >
+          ⚠️ Pour obtenir le code d’accès, rejoins notre Telegram officiel en cliquant ici.
+        </a>
+
+        <button id="password-button">
+          Entrer
+        </button>
+
+        <div id="password-error">
+          Mot de passe incorrect.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       AUTH SUPABASE
+  ========================================= -->
+
+  <div id="auth-screen">
+
+    <div class="auth-background"></div>
+
+    <div class="auth-box">
+
+      <div class="auth-logo">
+        KX<span>FLIX</span>
+      </div>
+
+      <div class="auth-tabs">
+
+        <button
+          id="login-tab"
+          class="auth-tab active"
+          type="button"
+        >
+          Se connecter
+        </button>
+
+        <button
+          id="signup-tab"
+          class="auth-tab"
+          type="button"
+        >
+          Créer un compte
+        </button>
+
+      </div>
+
+      <div id="auth-login" class="auth-panel active">
+
+        <h1>Connexion</h1>
+
+        <p>
+          Connecte-toi à ton compte KXFLIX.
+        </p>
+
+        <input
+          id="auth-login-email"
+          type="email"
+          placeholder="Adresse e-mail"
+          autocomplete="email"
+        >
+
+        <input
+          id="auth-login-password"
+          type="password"
+          placeholder="Mot de passe"
+          autocomplete="current-password"
+        >
+
+        <button
+          id="auth-login-button"
+          class="auth-main-button"
+          type="button"
+        >
+          Se connecter
+        </button>
+
+      </div>
+
+
+
+      <div id="auth-signup" class="auth-panel">
+
+        <h1>Créer ton compte</h1>
+
+        <p>
+          Ton compte te permet de retrouver ta liste sur tous tes appareils.
+        </p>
+
+        <input
+          id="auth-signup-username"
+          type="text"
+          placeholder="Ton pseudo"
+          autocomplete="nickname"
+          maxlength="30"
+        >
+
+        <input
+          id="auth-signup-email"
+          type="email"
+          placeholder="Adresse e-mail"
+          autocomplete="email"
+        >
+
+        <input
+          id="auth-signup-password"
+          type="password"
+          placeholder="Mot de passe"
+          autocomplete="new-password"
+        >
+
+        <div class="avatar-title">
+          Choisis ton avatar
+        </div>
+
+        <div id="avatar-picker" class="avatar-picker">
+
+          <button
+            class="avatar-option selected"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXRed"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXRed" alt="Avatar 1">
+          </button>
+
+          <button
+            class="avatar-option"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXBlack"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXBlack" alt="Avatar 2">
+          </button>
+
+          <button
+            class="avatar-option"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXBlue"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXBlue" alt="Avatar 3">
+          </button>
+
+          <button
+            class="avatar-option"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXGreen"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXGreen" alt="Avatar 4">
+          </button>
+
+          <button
+            class="avatar-option"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXGold"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXGold" alt="Avatar 5">
+          </button>
+
+          <button
+            class="avatar-option"
+            type="button"
+            data-avatar="https://api.dicebear.com/9.x/bottts/svg?seed=KXWhite"
+          >
+            <img src="https://api.dicebear.com/9.x/bottts/svg?seed=KXWhite" alt="Avatar 6">
+          </button>
+
+        </div>
+
+        <button
+          id="auth-signup-button"
+          class="auth-main-button"
+          type="button"
+        >
+          Créer mon compte
+        </button>
+
+      </div>
+
+      <div id="auth-message"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       SITE
+  ========================================= -->
+
+  <div id="site">
+
+    <header class="topbar">
+
+      <div class="logo">
+        KX<span>FLIX</span>
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="search-box">
+
+          <span class="search-icon">
+            ⌕
+          </span>
+
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Rechercher..."
+            autocomplete="off"
+          >
+
+          <button
+            id="clear-search"
+            type="button"
+          >
+            ×
+          </button>
+
+        </div>
+
+        <button
+          id="watchlist-button"
+          class="watchlist-top-button"
+          type="button"
+        >
+          ♡ <span>Ma liste</span>
+        </button>
+
+        <button
+          id="profile-button"
+          class="profile"
+          type="button"
+        >
+
+          <img
+            id="profile-avatar"
+            src="https://api.dicebear.com/9.x/bottts/svg?seed=KXRed"
+            alt="Avatar"
+          >
+
+          <span id="user-name">
+            Utilisateur
+          </span>
+
+        </button>
+
+        <div id="profile-menu" class="profile-menu">
+
+          <div class="profile-menu-name" id="profile-menu-name">
+            Utilisateur
+          </div>
+
+          <div class="profile-menu-email" id="profile-menu-email">
+            -
+          </div>
+
+          <button
+            id="logout-button"
+            type="button"
+          >
+            Se déconnecter
+          </button>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+
+    <section class="featured">
+
+      <div
+        class="featured-background"
+        style="background-image: url('https://snworksceo.imgix.net/ttd/86058c86-ffe3-45ff-bd60-f6f8d28dbdd1.sized-1000x1000.jpg?w=1600&dpr=2&ar=16%3A9&fit=crop&crop=faces');"
+      ></div>
+
+      <div class="featured-overlay"></div>
+
+      <div class="featured-fade"></div>
+
+      <div class="featured-content">
+
+        <div class="featured-label">
+          À LA UNE
+        </div>
+
+        <h1>
+          Spider-Man :<br>
+          New Generation
+        </h1>
+
+        <div class="featured-meta">
+
+          <span>2018</span>
+          <span>10+</span>
+          <span>Animation</span>
+
+        </div>
+
+        <p>
+          Miles Morales devient Spider-Man et découvre qu'il n'est pas
+          le seul héros à porter ce masque. Plusieurs dimensions vont
+          alors se retrouver liées.
+        </p>
+
+        <button
+          id="featured-button"
+          class="watch-button"
+          type="button"
+        >
+          ▶ Regarder
+        </button>
+
+      </div>
+
+    </section>
+
+
+
+    <main class="films-section">
+
+      <div class="section-header">
+
+        <h2 id="section-title">
+          Tous les films
+        </h2>
+
+        <div class="carousel-controls">
+
+          <button
+            id="prev-btn"
+            type="button"
+            aria-label="Films précédents"
+          >
+            ‹
+          </button>
+
+          <button
+            id="next-btn"
+            type="button"
+            aria-label="Films suivants"
+          >
+            ›
+          </button>
+
+        </div>
+
+      </div>
+
+      <div
+        id="search-status"
+        class="search-status"
+      ></div>
+
+      <div id="no-results">
+        Aucun film trouvé.
+      </div>
+
+      <div class="carousel-wrapper">
+
+        <div
+          id="carousel"
+          class="carousel"
+        ></div>
+
+      </div>
+
+    </main>
+
+
+
+    <a
+      class="telegram-link"
+      href="https://t.me/kxback"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span>✈</span>
+      Rejoindre le Telegram
+    </a>
+
+  </div>
+
+
+
+  <!-- =========================================
+       INFOS FILM
+  ========================================= -->
+
+  <div id="film-info">
+
+    <div class="info-box">
+
+      <button
+        id="close-info"
+        type="button"
+        aria-label="Fermer"
+      >
+        ×
+      </button>
+
+      <img
+        id="info-image"
+        src=""
+        alt=""
+      >
+
+      <div class="info-content">
+
+        <div class="info-top">
+
+          <span id="info-age"></span>
+          <span id="info-year"></span>
+
+        </div>
+
+        <h2 id="info-title"></h2>
+
+        <p id="info-synopsis"></p>
+
+        <div class="info-actions">
+
+          <button
+            id="launch-film"
+            type="button"
+          >
+            ▶ Regarder
+          </button>
+
+          <button
+            id="info-watchlist"
+            class="watchlist-info-button"
+            type="button"
+          >
+            ♡ Ma liste
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       LECTEUR
+  ========================================= -->
+
+  <div id="lecteur">
+
+    <div class="player-top">
+
+      <div
+        id="player-title"
+        class="player-title"
+      ></div>
+
+    </div>
+
+    <button
+      id="close-player"
+      type="button"
+      aria-label="Fermer le lecteur"
+    >
+      ×
+    </button>
+
+    <div class="player-progress">
+
+      <div id="player-progress-bar"></div>
+
+    </div>
+
+    <div class="player-container">
+
+      <iframe
+        id="video-frame"
+        src=""
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        referrerpolicy="origin"
+      ></iframe>
+
+    </div>
+
+  </div>
+
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
+```
